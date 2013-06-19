@@ -227,6 +227,41 @@
     [self setTitle:title forState:UIControlStateNormal];
 }
 
+- (void)makeAwesomeWithIcon:(FAIcon)icon {
+    [self makeAwesomeWithIcon:icon color:nil];
+}
+
+- (void)makeAwesomeWithIcon:(FAIcon)icon color:(UIColor *)newColor {
+    [self makeAwesomeWithIcon:icon color:newColor fontSize:self.titleLabel.font.pointSize];
+}
+
+- (void)makeAwesomeWithIcon:(FAIcon)icon color:(UIColor *)newColor fontSize:(CGFloat)fontSize {
+    NSString *iconString = [NSString stringFromAwesomeIcon:icon];
+    self.titleLabel.font = [UIFont fontWithName:@"FontAwesome" size:fontSize];
+    [self setTitle:iconString forState:UIControlStateNormal];
+
+    [self constrainFontToButtonSize];
+
+    if (newColor) {
+        self.color = newColor;
+    }
+}
+
+- (void)constrainFontToButtonSize {
+    NSString *iconString = self.titleLabel.text;
+
+    CGSize size = [iconString sizeWithFont:self.titleLabel.font forWidth:self.bounds.size.width lineBreakMode:NSLineBreakByCharWrapping];
+    UIFont *font = self.titleLabel.font;
+
+    while (size.width == 0 || CGRectGetMinY(self.titleLabel.frame) < 2 || CGRectGetMaxY(self.titleLabel.frame) > self.bounds.size.height - 2) {
+        CGFloat fontSize = [font pointSize];
+        fontSize -= 1;
+        font = [UIFont fontWithName:@"FontAwesome" size:fontSize];
+        self.titleLabel.font = font;
+        size = [iconString sizeWithFont:font forWidth:self.bounds.size.width lineBreakMode:NSLineBreakByCharWrapping];
+    }
+}
+
 + (UIColor *)colorForButtonType:(BButtonType)type
 {
     UIColor *newColor = nil;

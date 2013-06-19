@@ -73,4 +73,8 @@ typedef enum {
 - (void)setType:(BButtonType)type;
 - (void)addAwesomeIcon:(FAIcon)icon beforeTitle:(BOOL)before;
 
+- (void)makeAwesomeWithIcon:(FAIcon)icon;
+- (void)makeAwesomeWithIcon:(FAIcon)icon color:(UIColor *)color;
+- (void)makeAwesomeWithIcon:(FAIcon)icon color:(UIColor *)color fontSize:(CGFloat)fontSize;
+
 @end
